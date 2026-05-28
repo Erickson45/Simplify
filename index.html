@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simplify Solutions | Tecnologia para simplificar negócios</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* =========================================
+           VARIÁVEIS DE COR E ESTILO GLOBAL
+        ========================================= */
+        :root {
+            --primary-blue: #0056b3; 
+            --primary-light: #3384ff;
+            --primary-dark: #003d82;
+            --accent-cyan: #00c6ff;
+            --charcoal: #1a1e23; 
+            --text-gray: #495057;
+            --bg-light: #f4f6f9; 
+            --bg-white: #ffffff;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --shadow-sm: 0 4px 6px rgba(0,0,0,0.03);
+            --shadow-md: 0 10px 25px rgba(0,0,0,0.08);
+            --shadow-lg: 0 20px 40px rgba(0, 86, 179, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-gray);
+            background-color: var(--bg-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--charcoal);
+            line-height: 1.2;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* BOTOES */
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-light));
+            color: var(--bg-white);
+            box-shadow: 0 6px 20px rgba(51, 132, 255, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(51, 132, 255, 0.6);
+            color: white;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-blue);
+            color: var(--bg-white);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 86, 179, 0.2);
+        }
+
+        /* =========================================
+           HEADER & NAVEGAÇÃO
+        ========================================= */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 1000;
+            transition: var(--transition);
+            border-bottom: 1px solid rgba(0,0,0,0.03);
+        }
+
+        header.scrolled {
+            box-shadow: var(--shadow-sm);
+            background-color: rgba(255, 255, 255, 0.98);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 85px;
+        }
+
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--charcoal);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .logo i {
+            color: var(--primary-blue);
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .nav-links li a {
+            font-weight: 500;
+            font-size: 1rem;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links li a:not(.btn)::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary-blue);
+            transition: var(--transition);
+        }
+
+        .nav-links li a:not(.btn):hover::after {
+            width: 100%;
+        }
+
+        .nav-links li a:hover {
+            color: var(--primary-blue);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--charcoal);
+        }
+
+        /* =========================================
+           HERO SECTION
+        ========================================= */
+        .hero {
+            padding-top: 160px;
+            padding-bottom: 120px;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(51,132,255,0.08) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+        }
+
+        .hero .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 50px;
+        }
+
+        .hero-content {
+            flex: 1.2;
+            max-width: 650px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 25px;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(120deg, var(--primary-blue), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            margin-bottom: 40px;
+            color: var(--text-gray);
+            font-weight: 400;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .hero-visual {
+            flex: 1;
+            position: relative;
+            height: 450px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Abstract Tech Visual */
+        .tech-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            position: absolute;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .card-main { 
+            z-index: 3; 
+            width: 300px; 
+            height: 200px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            text-align: center; 
+            background: white; 
+        }
+        .card-main i { font-size: 3.5rem; color: var(--primary-blue); margin-bottom: 15px; }
+        .card-main h3 { font-size: 1.3rem; margin-bottom: 5px; }
+        
+        .card-sub1 { top: 30px; left: -20px; z-index: 2; width: 180px; animation-delay: 1s; display: flex; align-items: center; gap: 12px; font-size: 0.85rem; font-weight: 600;}
+        .card-sub1 i { color: #10b981; font-size: 1.2rem; }
+
+        .card-sub2 { bottom: 40px; right: -20px; z-index: 4; width: 200px; animation-delay: 2s; display: flex; align-items: center; gap: 12px; font-size: 0.85rem; font-weight: 600; }
+        .card-sub2 i { color: #f59e0b; font-size: 1.2rem; }
+
+        .tech-lines {
+            position: absolute;
+            width: 120%;
+            height: 120%;
+            background-image: radial-gradient(var(--primary-blue) 1.5px, transparent 1.5px);
+            background-size: 25px 25px;
+            opacity: 0.08;
+            z-index: 1;
+            border-radius: 50%;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-18px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* =========================================
+           PROBLEMS SECTION
+        ========================================= */
+        .problemas {
+            padding: 100px 0;
+            background-color: var(--bg-white);
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            letter-spacing: -0.5px;
+        }
+
+        .problemas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .problema-card {
+            background-color: var(--bg-light);
+            padding: 30px 25px;
+            border-radius: 12px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            text-align: left;
+            border-left: 4px solid transparent;
+        }
+
+        .problema-card:hover {
+            transform: translateX(8px);
+            background-color: #fff;
+            box-shadow: var(--shadow-md);
+            border-left: 4px solid #ef4444; /* Vermelho alerta */
+        }
+
+        .problema-card i {
+            font-size: 1.8rem;
+            color: #ef4444;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+        
+        .problema-card:hover i {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .problema-card h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .problema-conclusao {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--primary-dark);
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 25px;
+            background: linear-gradient(to right, rgba(0, 86, 179, 0.02), rgba(0, 86, 179, 0.08), rgba(0, 86, 179, 0.02));
+            border-radius: 12px;
+            border: 1px solid rgba(0, 86, 179, 0.1);
+        }
+
+        /* =========================================
+           SOLUTIONS / SERVICES SECTION
+        ========================================= */
+        .solucoes {
+            padding: 100px 0;
+            background-color: var(--bg-light);
+            text-align: center;
+        }
+
+        .servicos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 35px;
+            margin-top: 60px;
+        }
+
+        .servico-card {
+            background: var(--bg-white);
+            padding: 45px 35px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.04);
+            z-index: 1;
+        }
+
+        .servico-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--accent-cyan));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            z-index: 2;
+        }
+
+        .servico-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .servico-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .icon-wrapper {
+            width: 65px;
+            height: 65px;
+            background: linear-gradient(135deg, rgba(0, 86, 179, 0.1), rgba(0, 198, 255, 0.1));
+            color: var(--primary-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            transition: var(--transition);
+        }
+
+        .servico-card:hover .icon-wrapper {
+            background: var(--primary-blue);
+            color: white;
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .servico-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        /* =========================================
+           PLANS & PRICING
+        ========================================= */
+        .planos {
+            padding: 100px 0;
+            background-color: var(--bg-white);
+            text-align: center;
+        }
+
+        .planos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+            align-items: center; /* Centraliza verticalmente o card em destaque */
+        }
+
+        .plano-card {
+            background: var(--bg-white);
+            border-radius: 16px;
+            padding: 45px 35px;
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+        }
+
+        .plano-card.destaque {
+            background: var(--charcoal);
+            color: var(--bg-white);
+            transform: scale(1.05);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.1);
+            z-index: 10;
+        }
+
+        .badge-popular {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, #f59e0b, #fbbf24);
+            color: #000;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+        }
+
+        .plano-card.destaque h3, 
+        .plano-card.destaque .preco {
+            color: var(--bg-white);
+        }
+
+        .plano-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .plano-card.destaque:hover {
+            transform: scale(1.05) translateY(-8px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.25);
+        }
+
+        .plano-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .preco {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 25px;
+            font-family: 'Poppins', sans-serif;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding-bottom: 20px;
+        }
+        
+        .plano-card.destaque .preco {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .plano-card ul {
+            text-align: left;
+            margin-bottom: 35px;
+            flex-grow: 1;
+        }
+
+        .plano-card ul li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+            color: var(--text-gray);
+        }
+
+        .plano-card.destaque ul li {
+            color: #d1d5db;
+        }
+
+        .plano-card ul li i {
+            color: var(--primary-blue);
+            font-size: 1.1rem;
+        }
+
+        .plano-card.destaque ul li i {
+            color: var(--accent-cyan);
+        }
+
+        .plano-obs {
+            margin-top: 50px;
+            font-size: 0.95rem;
+            color: #6b7280;
+            font-style: italic;
+        }
+
+        /* =========================================
+           ABOUT SECTION
+        ========================================= */
+        .sobre {
+            padding: 100px 0;
+            background-color: var(--bg-light);
+        }
+
+        .sobre-content {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .sobre-texto {
+            flex: 1;
+        }
+
+        .sobre-texto p {
+            margin-bottom: 20px;
+            font-size: 1.15rem;
+            color: var(--text-gray);
+        }
+
+        .pilares {
+            display: flex;
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .pilar {
+            flex: 1;
+            background: var(--bg-white);
+            padding: 30px 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            font-weight: 700;
+            color: var(--charcoal);
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .pilar:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-blue);
+        }
+
+        .pilar i {
+            display: block;
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--primary-blue);
+        }
+
+        /* =========================================
+           FINAL CTA SECTION
+        ========================================= */
+        .cta-final {
+            padding: 120px 0;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-blue) 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-final::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><circle cx="2" cy="2" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+            opacity: 0.5;
+        }
+
+        .cta-final .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-final h2 {
+            color: white;
+            font-size: 2.8rem;
+            margin-bottom: 25px;
+        }
+
+        .cta-final p {
+            font-size: 1.25rem;
+            margin-bottom: 45px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.9;
+        }
+
+        .btn-whatsapp {
+            background-color: #25D366;
+            color: white;
+            font-size: 1.2rem;
+            padding: 18px 40px;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+            transition: var(--transition);
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #20bd5a;
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 15px 35px rgba(37, 211, 102, 0.5);
+        }
+        
+        .btn-whatsapp i {
+            font-size: 1.5rem;
+        }
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+        footer {
+            background-color: #0f1216;
+            color: #9ca3af;
+            padding: 80px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-col h4 {
+            color: white;
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-col h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary-blue);
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul li a {
+            transition: var(--transition);
+        }
+
+        .footer-col ul li a:hover {
+            color: white;
+            padding-left: 8px;
+            color: var(--accent-cyan);
+        }
+
+        .footer-logo {
+            color: white;
+            font-size: 1.8rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+        }
+
+        .footer-logo i {
+            color: var(--primary-light);
+        }
+
+        .footer-col p {
+            line-height: 1.8;
+        }
+
+        .footer-col ul li i {
+            width: 20px;
+            color: var(--primary-light);
+            margin-right: 8px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.95rem;
+        }
+
+        /* =========================================
+           FLOATING WHATSAPP BUTTON
+        ========================================= */
+        .floating-wa {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25D366;
+            color: white;
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.2rem;
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+            z-index: 999;
+            transition: var(--transition);
+            animation: pulse 2s infinite;
+        }
+
+        .floating-wa:hover {
+            transform: scale(1.15) rotate(-5deg);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
+            70% { box-shadow: 0 0 0 20px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        /* =========================================
+           ANIMATIONS (SCROLL REVEAL)
+        ========================================= */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* =========================================
+           MEDIA QUERIES (RESPONSIVO)
+        ========================================= */
+        @media (max-width: 992px) {
+            .hero h1 { font-size: 2.8rem; }
+            .sobre-content { flex-direction: column; }
+            .hero .container { flex-direction: column; text-align: center; }
+            .hero-buttons { justify-content: center; }
+            .hero-visual { display: none; }
+            .hero { padding-top: 140px; }
+            .plano-card.destaque { transform: scale(1); }
+            .plano-card.destaque:hover { transform: translateY(-8px); }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            
+            .nav-links {
+                position: fixed;
+                top: 85px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 85px);
+                background-color: var(--bg-white);
+                flex-direction: column;
+                justify-content: center;
+                gap: 40px;
+                transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+                box-shadow: inset 0 10px 15px -10px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links li a {
+                font-size: 1.3rem;
+            }
+
+            .hero h1 { font-size: 2.2rem; }
+            .pilares { flex-direction: column; }
+            .btn-header { display: none; }
+            .cta-final h2 { font-size: 2rem; }
+            .planos-grid { gap: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="header">
+        <div class="container navbar">
+            <a href="#" class="logo">
+                <i class="fas fa-layer-group"></i> Simplify
+            </a>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#inicio">Início</a></li>
+                <li><a href="#servicos">Serviços</a></li>
+                <li><a href="#planos">Planos</a></li>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#contato">Contato</a></li>
+                <li><a href="https://wa.me/5584921555670?text=Olá,%20tenho%20interesse%20em%20uma%20consultoria%20da%20Simplify%20Solutions" target="_blank" class="btn btn-primary btn-header">Solicitar consultoria</a></li>
+            </ul>
+
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="inicio" class="hero">
+            <div class="container">
+                <div class="hero-content reveal">
+                    <h1>Tire sua empresa do papel com <span>soluções digitais</span> inteligentes</h1>
+                    <p>Automatizamos processos, criamos sistemas sob medida e ajudamos empresas a ganhar mais controle, produtividade e organização.</p>
+                    <div class="hero-buttons">
+                        <a href="https://wa.me/5584921555670?text=Olá,%20tenho%20interesse%20em%20uma%20consultoria%20da%20Simplify%20Solutions" target="_blank" class="btn btn-primary">Solicitar consultoria</a>
+                        <a href="#servicos" class="btn btn-outline">Ver serviços</a>
+                    </div>
+                </div>
+                <div class="hero-visual reveal">
+                    <div class="tech-lines"></div>
+                    <div class="tech-card card-main">
+                        <i class="fas fa-chart-pie"></i>
+                        <h3>Dashboard</h3>
+                        <p style="font-size: 0.9rem; color: #6b7280; font-weight: 500;">Controle em Tempo Real</p>
+                    </div>
+                    <div class="tech-card card-sub1">
+                        <i class="fas fa-check-circle"></i> Tarefa Automatizada
+                    </div>
+                    <div class="tech-card card-sub2">
+                        <i class="fas fa-sync-alt"></i> Dados Sincronizados
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="problemas">
+            <div class="container reveal">
+                <h2 class="section-title">Sua empresa ainda sofre com processos manuais?</h2>
+                
+                <div class="problemas-grid">
+                    <div class="problema-card">
+                        <i class="fas fa-copy"></i>
+                        <h4>Acúmulo de papel</h4>
+                    </div>
+                    <div class="problema-card">
+                        <i class="fas fa-file-excel"></i>
+                        <h4>Planilhas soltas</h4>
+                    </div>
+                    <div class="problema-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>Falta de histórico de vendas</h4>
+                    </div>
+                    <div class="problema-card">
+                        <i class="fas fa-project-diagram"></i>
+                        <h4>Dificuldade para organizar processos</h4>
+                    </div>
+                    <div class="problema-card">
+                        <i class="fas fa-stopwatch"></i>
+                        <h4>Perda de tempo com tarefas repetitivas</h4>
+                    </div>
+                    <div class="problema-card">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h4>Falta de controle da operação</h4>
+                    </div>
+                </div>
+
+                <div class="problema-conclusao">
+                    "Se sua empresa ainda depende de papel, cadernos ou planilhas desorganizadas, está na hora de simplificar."
+                </div>
+            </div>
+        </section>
+
+        <section id="servicos" class="solucoes">
+            <div class="container reveal">
+                <h2 class="section-title">Como a Simplify ajuda sua empresa</h2>
+                
+                <div class="servicos-grid">
+                    <div class="servico-card">
+                        <div class="icon-wrapper"><i class="fas fa-robot"></i></div>
+                        <h3>Automação de Processos</h3>
+                        <p>Automatizamos tarefas repetitivas, relatórios, notificações, controles e fluxos manuais.</p>
+                    </div>
+                    
+                    <div class="servico-card">
+                        <div class="icon-wrapper"><i class="fas fa-code"></i></div>
+                        <h3>Sistemas Sob Medida</h3>
+                        <p>Criamos sistemas personalizados para controle de vendas, clientes, estoque e processos internos.</p>
+                    </div>
+                    
+                    <div class="servico-card">
+                        <div class="icon-wrapper"><i class="fas fa-user-tie"></i></div>
+                        <h3>Consultoria em TI</h3>
+                        <p>Analisamos sua operação e indicamos as melhores soluções digitais para o seu negócio.</p>
+                    </div>
+                    
+                    <div class="servico-card">
+                        <div class="icon-wrapper"><i class="fas fa-network-wired"></i></div>
+                        <h3>Integrações e APIs</h3>
+                        <p>Conectamos sistemas, planilhas, bancos de dados, formulários, e-mails e outras ferramentas.</p>
+                    </div>
+                    
+                    <div class="servico-card">
+                        <div class="icon-wrapper"><i class="fas fa-chart-bar"></i></div>
+                        <h3>Dashboards e Relatórios</h3>
+                        <p>Criamos painéis visuais para acompanhar vendas, indicadores e resultados de forma clara.</p>
+                    </div>
+                    
+                    <div class="servico-card">
+                        <div class="icon-wrapper"><i class="fas fa-cloud"></i></div>
+                        <h3>Organização Digital</h3>
+                        <p>Ajudamos empresas a saírem do papel e centralizarem informações em soluções digitais simples.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="planos" class="planos">
+            <div class="container reveal">
+                <h2 class="section-title">Planos e Investimentos</h2>
+                
+                <div class="planos-grid">
+                    <div class="plano-card">
+                        <h3>Diagnóstico Digital</h3>
+                        <div class="preco">R$ 97 a R$ 197</div>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Reunião inicial de briefing</li>
+                            <li><i class="fas fa-check"></i> Análise do processo atual</li>
+                            <li><i class="fas fa-check"></i> Mapeamento de gargalos</li>
+                            <li><i class="fas fa-check"></i> Sugestões de automação</li>
+                        </ul>
+                        <a href="https://wa.me/5584921555670?text=Olá,%20gostaria%20de%20saber%20mais%20sobre%20o%20Diagnóstico%20Digital" target="_blank" class="btn btn-outline">Quero um diagnóstico</a>
+                    </div>
+                    
+                    <div class="plano-card">
+                        <h3>Automação Simples</h3>
+                        <div class="preco">R$ 297 a R$ 497</div>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Automação de 1 a 2 tarefas</li>
+                            <li><i class="fas fa-check"></i> Planilhas inteligentes</li>
+                            <li><i class="fas fa-check"></i> Relatórios simplificados</li>
+                            <li><i class="fas fa-check"></i> Redução de processos manuais</li>
+                        </ul>
+                        <a href="https://wa.me/5584921555670?text=Olá,%20gostaria%20de%20saber%20mais%20sobre%20a%20Automação%20Simples" target="_blank" class="btn btn-outline">Quero automatizar</a>
+                    </div>
+
+                    <div class="plano-card destaque">
+                        <div class="badge-popular">Mais Popular</div>
+                        <h3>Controle Digital Básico</h3>
+                        <div class="preco">R$ 697 a R$ 997</div>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Sistema simples de cadastro</li>
+                            <li><i class="fas fa-check"></i> Controle de vendas/estoque</li>
+                            <li><i class="fas fa-check"></i> Interface web intuitiva</li>
+                            <li><i class="fas fa-check"></i> Organização total das informações</li>
+                        </ul>
+                        <a href="https://wa.me/5584921555670?text=Olá,%20gostaria%20de%20saber%20mais%20sobre%20o%20Controle%20Digital%20Básico" target="_blank" class="btn btn-primary">Quero sair do papel</a>
+                    </div>
+
+                    <div class="plano-card">
+                        <h3>Sistema Sob Medida</h3>
+                        <div class="preco">A partir R$ 997</div>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Sistema web 100% sob medida</li>
+                            <li><i class="fas fa-check"></i> Login e múltiplos usuários</li>
+                            <li><i class="fas fa-check"></i> Painel administrativo completo</li>
+                            <li><i class="fas fa-check"></i> Relatórios avançados</li>
+                        </ul>
+                        <a href="https://wa.me/5584921555670?text=Olá,%20gostaria%20de%20solicitar%20um%20orçamento%20para%20Sistema%20Sob%20Medida" target="_blank" class="btn btn-outline">Solicitar orçamento</a>
+                    </div>
+
+                    <div class="plano-card">
+                        <h3>Suporte Mensal</h3>
+                        <div class="preco">A partir R$ 97/mês</div>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Pequenos ajustes evolutivos</li>
+                            <li><i class="fas fa-check"></i> Plantão de dúvidas</li>
+                            <li><i class="fas fa-check"></i> Manutenção preventiva</li>
+                            <li><i class="fas fa-check"></i> Acompanhamento de resultados</li>
+                        </ul>
+                        <a href="https://wa.me/5584921555670?text=Olá,%20tenho%20interesse%20no%20Plano%20de%20Suporte%20Mensal" target="_blank" class="btn btn-outline">Quero suporte</a>
+                    </div>
+                </div>
+
+                <p class="plano-obs">* Valores iniciais de referência para pequenos negócios. Projetos personalizados são avaliados conforme a complexidade e necessidade exata da empresa.</p>
+            </div>
+        </section>
+
+        <section id="sobre" class="sobre">
+            <div class="container reveal">
+                <h2 class="section-title">Sobre a Simplify Solutions</h2>
+                <div class="sobre-content">
+                    <div class="sobre-texto">
+                        <p>A <strong>Simplify Solutions</strong> nasceu com o objetivo de tornar a tecnologia mais simples, acessível e incrivelmente eficiente para empresas que desejam organizar processos, reduzir tarefas manuais e ganhar mais controle sobre sua operação.</p>
+                        <p>Nosso foco é transformar as dores diárias do seu negócio em soluções digitais práticas, inteligentes e escaláveis.</p>
+                        
+                        <div class="pilares">
+                            <div class="pilar">
+                                <i class="fas fa-compress-arrows-alt"></i>
+                                Simplicidade
+                            </div>
+                            <div class="pilar">
+                                <i class="fas fa-microchip"></i>
+                                Tecnologia
+                            </div>
+                            <div class="pilar">
+                                <i class="fas fa-rocket"></i>
+                                Resultado
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contato" class="cta-final">
+            <div class="container reveal">
+                <h2>Pronto para simplificar sua empresa?</h2>
+                <p>Fale com a Simplify Solutions agora mesmo e descubra como a tecnologia pode ajudar seu negócio a sair do papel, economizar tempo e lucrar mais.</p>
+                <a href="https://wa.me/5584921555670?text=Olá,%20tenho%20interesse%20em%20uma%20consultoria%20da%20Simplify%20Solutions" target="_blank" class="btn btn-whatsapp">
+                    <i class="fab fa-whatsapp"></i> Nos chame para uma consultoria
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <i class="fas fa-layer-group"></i> Simplify
+                    </div>
+                    <p>Transformamos a complexidade em soluções digitais inteligentes. Tecnologia feita para simplificar o seu negócio.</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="#inicio">Início</a></li>
+                        <li><a href="#sobre">Sobre nós</a></li>
+                        <li><a href="#servicos">Nossos Serviços</a></li>
+                        <li><a href="#planos">Planos e Preços</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Serviços</h4>
+                    <ul>
+                        <li><a href="#servicos">Automação de Processos</a></li>
+                        <li><a href="#servicos">Sistemas Sob Medida</a></li>
+                        <li><a href="#servicos">Consultoria em TI</a></li>
+                        <li><a href="#servicos">Dashboards e Relatórios</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Contato direto</h4>
+                    <ul>
+                        <li><a href="https://wa.me/5584921555670" target="_blank"><i class="fab fa-whatsapp"></i> (84) 92155-5670</a></li>
+                        <li><a href="mailto:contato@simplifysolutions.com"><i class="far fa-envelope"></i> contato@simplifysolutions.com</a></li>
+                        <li><i class="fas fa-map-marker-alt"></i> Atendimento 100% Online</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2026 Simplify Solutions. Todos os direitos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/5584921555670?text=Olá,%20tenho%20interesse%20em%20uma%20consultoria%20da%20Simplify%20Solutions" target="_blank" class="floating-wa">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // 1. Menu Mobile (Hamburger Toggle)
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+        const icon = menuToggle.querySelector('i');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            if(navLinks.classList.contains('active')){
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Fechar menu mobile ao clicar em um link
+        const links = document.querySelectorAll('.nav-links li a');
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
+        });
+
+        // 2. Mudar estilo do Header ao fazer Scroll
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // 3. Efeito de Reveal Suave no Scroll (Intersection Observer)
+        const reveals = document.querySelectorAll('.reveal');
+        
+        const revealOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                } else {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, revealOptions);
+
+        reveals.forEach(reveal => {
+            revealOnScroll.observe(reveal);
+        });
+    </script>
+</body>
+</html>
